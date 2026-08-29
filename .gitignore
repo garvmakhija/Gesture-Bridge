@@ -1,0 +1,6 @@
+.gesture/
+__pycache__/
+*.pyc
+.env
+.streamlit/secrets.toml
+.DS_Store

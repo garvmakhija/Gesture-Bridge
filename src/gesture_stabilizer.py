@@ -1,7 +1,6 @@
 from collections import deque
 import time
 
-
 class GestureStabilizer:
     def __init__(self, window_size=5, cooldown=0.8):
         self.history = deque(maxlen=window_size)

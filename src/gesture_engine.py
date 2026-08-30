@@ -1,6 +1,4 @@
 import math
-
-
 class GestureEngine:
     def _distance(self, a, b):
         return math.sqrt(
@@ -8,14 +6,12 @@ class GestureEngine:
             (a.y - b.y) ** 2 +
             (a.z - b.z) ** 2
         )
-
     def _angle(self, a, b, c):
         ab = (
             a.x - b.x,
             a.y - b.y,
             a.z - b.z
         )
-
         cb = (
             c.x - b.x,
             c.y - b.y,

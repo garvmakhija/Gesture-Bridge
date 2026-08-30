@@ -26,7 +26,6 @@ Gesture Bridge captures live camera frames, extracts hand landmarks, classifies 
 ## Supported Gestures
 
 | Gesture | Description |
-|---|---|
 | THUMBS UP | Thumb extended upward with other fingers curled |
 | THUMBS DOWN | Thumb extended downward with other fingers curled |
 | OPEN PALM | Four fingers extended |

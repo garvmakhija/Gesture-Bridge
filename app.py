@@ -4,7 +4,7 @@ import threading
 import time
 import streamlit as st
 from streamlit_webrtc import webrtc_streamer, WebRtcMode
-
+# My Modules
 from src.gesture_detector import GestureDetector
 from src.gesture_engine import GestureEngine
 from src.gesture_stabilizer import GestureStabilizer
@@ -23,16 +23,13 @@ class RuntimeConfig:
         self.webhook_url = ""
         self.webhook_enabled = False
         self.lock = threading.Lock()
-
     def update(self, url, enabled):
         with self.lock:
             self.webhook_url = url
             self.webhook_enabled = enabled
-
     def get(self):
         with self.lock:
             return self.webhook_url, self.webhook_enabled
-
 
 class PerformanceStats:
     def __init__(self):
@@ -59,7 +56,6 @@ class PerformanceStats:
                     self.fps = (
                         len(self.frame_times) - 1
                     ) / elapsed
-
     def get(self):
         with self.lock:
             return {
@@ -67,11 +63,9 @@ class PerformanceStats:
                 "latency": self.processing_latency
             }
 
-
 @st.cache_resource
 def get_runtime():
     return RuntimeConfig()
-
 
 @st.cache_resource
 def get_performance():
@@ -159,24 +153,17 @@ with right:
 
 def video_frame_callback(frame):
     start_time = time.perf_counter()
-
     image = frame.to_ndarray(format="bgr24")
-
     processed_frame, result = detector.process(image)
-
     gesture = "NO HAND"
-
     if result.multi_hand_landmarks:
         raw_gesture = engine.detect(
             result.multi_hand_landmarks[0]
         )
-
         gesture, event = stabilizer.update(
             raw_gesture
         )
-
         url, enabled = runtime.get()
-
         if (
             event
             and enabled
@@ -192,9 +179,7 @@ def video_frame_callback(frame):
     processing_time = (
         time.perf_counter() - start_time
     )
-
     performance.update(processing_time)
-
     cv2.rectangle(
         processed_frame,
         (20, 20),
@@ -202,7 +187,6 @@ def video_frame_callback(frame):
         (15, 15, 15),
         -1
     )
-
     cv2.putText(
         processed_frame,
         gesture,
@@ -245,10 +229,8 @@ st.divider()
 @st.fragment(run_every="1s")
 def performance_dashboard():
     st.subheader("Live Performance")
-
     performance_data = performance.get()
     webhook_data = dispatcher.get_stats()
-
     metric1, metric2, metric3, metric4 = st.columns(4)
 
     with metric1:
@@ -301,9 +283,7 @@ performance_dashboard()
 st.divider()
 
 st.subheader("Recent Events")
-
 events = dispatcher.get_history()
-
 if events:
     for event in events[:8]:
         if event["status"] == "DELIVERED":
